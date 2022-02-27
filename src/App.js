@@ -1,8 +1,12 @@
-import React from 'react'
+import React from 'react';
+import ChatInput from './components/ChatInput';
 
 function App() {
   return (
-    <div className='text-red-500'>Hello</div>
+    <div className='w-full bg-red-400'>
+      <ChatInput />
+
+    </div >
   )
 }
 
