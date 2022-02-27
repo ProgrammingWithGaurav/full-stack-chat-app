@@ -3,9 +3,8 @@ import ChatInput from './components/ChatInput';
 
 function App() {
   return (
-    <div className='w-full bg-red-400'>
+    <div>
       <ChatInput />
-
     </div >
   )
 }
