@@ -22,14 +22,15 @@ function App() {
   return (
       <Routes>
         <Route path="/" element={
-          <>
+          <div className='overflow-y-scroll overflow-x-hidden'>
             <Chats />
             <ChatInput />
-          </>
+          </div>
         } />
         <Route path='/login' element={<Login />} />
       </Routes>
   )
+
 }
 
 export default App
