@@ -5,7 +5,7 @@ import {PaperAirplaneIcon} from '@heroicons/react/solid';
 
 function ChatInput() {
     return (
-        <div className='absolute bottom-0 flex items-center justify-between w-full px-5 py-2'>
+        <div className='fixed bottom-0 flex items-center justify-between w-full px-5 py-2'>
             {/* Plus Icon */}
             <PlusIcon />
 
