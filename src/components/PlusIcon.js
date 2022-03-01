@@ -1,17 +1,19 @@
 /* This example requires Tailwind CSS v2.0+ */
-import { Fragment } from 'react';
-import { Menu, Transition } from '@headlessui/react';
-import { PhotographIcon, VideoCameraIcon,VolumeUpIcon } from '@heroicons/react/solid';
-import {PlusCircleIcon} from '@heroicons/react/outline';
+import { Fragment } from "react";
+import { Menu, Transition } from "@headlessui/react";
+import {
+  PhotographIcon,
+  VideoCameraIcon,
+  VolumeUpIcon,
+} from "@heroicons/react/solid";
+import { PlusCircleIcon } from "@heroicons/react/outline";
 
-
-
-export default function Example({filePickerRef}) {
+export default function PlusIcon({ filePickerRef, setFileType,loading}) {
   return (
     <Menu as="div" className="relative inline-block text-left">
-      <div className='mr-2'>
-        <Menu.Button className="inline-flex justify-center w-full rounded-full border border-gray-300 shadow-sm p-2 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-indigo-500">
-          <PlusCircleIcon className='h-7 w-7 text-gray-400 focus:text-gray-600' />
+      <div className="mr-2">
+        <Menu.Button disabled={loading} className="inline-flex justify-center w-full rounded-full border border-gray-300 shadow-sm p-2 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-indigo-500">
+          <PlusCircleIcon className="h-7 w-7 text-gray-400 focus:text-gray-600" />
         </Menu.Button>
       </div>
 
@@ -26,25 +28,35 @@ export default function Example({filePickerRef}) {
       >
         <Menu.Items className="origin-top-right absolute left-0 -mt-28 w-30 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
           <div className="py-1 flex">
-            <Menu.Item onClick={() => filePickerRef.current.click()}>
-                <PhotographIcon
-                className="h-10 w-10 mx-2 p-1 cursor-pointer hover:text-gray-600 text-gray-400"
-                  />
-            </Menu.Item>
-            <Menu.Item onClick={() => filePickerRef.current.click()}>
-                <VideoCameraIcon
-                className="h-10 w-10 mx-2 p-1 cursor-pointer hover:text-gray-600 text-gray-400"
+            <Menu.Item as={Fragment}
+              onClick={async() => {
+               await setFileType('image')
+               await filePickerRef.current.click();
                 
-                />
+              }}
+            >
+              <PhotographIcon className="fileUploadIcon" />
             </Menu.Item>
-            <Menu.Item onClick={() => filePickerRef.current.click()}>
-                <VolumeUpIcon
-                className="h-10 w-10 mx-2 p-1 cursor-pointer hover:text-gray-600 text-gray-400"                
-                />
+            <Menu.Item as={Fragment}
+              onClick={async() => {
+               await setFileType('video')
+               await filePickerRef.current.click();
+              }}
+            >
+              <VideoCameraIcon className="fileUploadIcon" />
+            </Menu.Item>
+
+            <Menu.Item as={Fragment}
+              onClick={async() => {
+               await setFileType('audio')
+               await filePickerRef.current.click();
+              }}
+            >
+              <VolumeUpIcon className="fileUploadIcon" />
             </Menu.Item>
           </div>
         </Menu.Items>
       </Transition>
     </Menu>
-  )
+  );
 }

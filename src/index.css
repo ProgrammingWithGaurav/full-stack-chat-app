@@ -1,3 +1,9 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer components{
+    .fileUploadIcon {
+        @apply h-10 w-10 mx-2 p-1 cursor-pointer hover:text-gray-600 text-gray-400;
+    }
+}

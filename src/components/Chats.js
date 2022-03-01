@@ -23,16 +23,12 @@ function Chats({ user }) {
             }
         )
     }
+    // eslint-disable-next-line 
         , [db])
 
-useEffect(() => {
-    console.log(chats)
-    console.log(user)
-
-}, [chats])
     return (
         <div className='flex flex-col px-3 py-12'>
-            {
+            {// eslint-disable-next-line 
                 chats.map(chat => {
                     if (chat.type === 'text') {
                         return <TextChat key={chat.id} senderMessage={chat.uid === user.uid} {...chat} />

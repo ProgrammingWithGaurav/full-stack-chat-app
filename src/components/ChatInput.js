@@ -1,47 +1,26 @@
-import React, {useState, useRef} from "react";
+import React, {useRef} from "react";
 import PlusIcon from "./PlusIcon";
 import { PaperAirplaneIcon } from "@heroicons/react/solid";
-import { addDoc, serverTimestamp, collection,updateDoc, doc } from '@firebase/firestore';
-import {getDownloadURL, uploadString, ref} from '@firebase/storage';
-import { db, storage } from '../firebase';
+import { addDoc, serverTimestamp, collection } from '@firebase/firestore';
+import { db } from '../firebase';
 
-function ChatInput({ user, input, setInput }) {
+function ChatInput({ user, input, setInput, setSelectedFile,fileType, setFileType, modalOpen, setModalOpen,loading }) {
     const filePickerRef = useRef();
-    const [selectedFile, setSelectedFile] = useState(null);
     const sendChat = async (e) => {
         e.preventDefault();
-        if (input !== '') {
+        if (input !== '' && input.trim() !== '') {
             const copyInput = input;
             setInput('');
             await addDoc(collection(db, 'all-type-chats'), {
                 type: 'text',
                 username: user.displayName,
-                message: input,
+                message: copyInput,
                 timestamp: serverTimestamp(),
                 uid: user.uid
             });
         }
     }
 
-    const sendFile = async () => {
-        const docRef = await addDoc(collection(db, 'all-type-chats'), {
-            type: 'text',
-            username: user.displayName,
-            
-            timestamp: serverTimestamp()
-        });
-
-        const imageRef = ref(storage, `all_type_chats/${docRef.id}/image`);
-        await uploadString(imageRef, selectedFile, 'data_url').then(async snapshot => {
-            const downloadURL = await getDownloadURL(imageRef);
-            await updateDoc(doc(db, 'all_type_chats', docRef.id), {
-                image: downloadURL
-            })
-        })
-        setSelectedFile(null);
-    }
-
-    
     const addFileToPost = (e) => {
         const reader = new FileReader();
         if (e.target.files[0]) {
@@ -50,15 +29,16 @@ function ChatInput({ user, input, setInput }) {
         reader.onload = (readerEvent) => {
             setSelectedFile(readerEvent.target.result);
         };
+        setModalOpen(true);
     };
     return (
         <div className="fixed bottom-0 flex items-center justify-between w-full px-5 py-2">
             {/* Plus Icon */}
-            <PlusIcon filePickerRef={filePickerRef}/>
+            <PlusIcon loading={loading}  setSelectedFile={setSelectedFile} fileType={fileType} setFileType={setFileType} setModalOpen={setModalOpen}  modalOpen={modalOpen} filePickerRef={filePickerRef}/>
 
             {/* Input */}
             <form className='flex-1' onSubmit={sendChat}>
-                <input type='file' hidden ref={filePickerRef} onChange={addFileToPost} />
+                <input type='file' hidden ref={filePickerRef} onChange={addFileToPost} accept={fileType ? `${fileType}/*` : ''}/>
                 <input
                     value={input}
                     onChange={(text) => setInput(text.target.value)}
