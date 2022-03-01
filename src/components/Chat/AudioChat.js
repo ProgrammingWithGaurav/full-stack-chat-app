@@ -1,6 +1,6 @@
 import React from 'react'
 
-function AudioChat({ senderMessage, audioUrl, username }) {
+function AudioChat({ senderMessage, url, username }) {
     return (
         <>
             {
@@ -10,7 +10,7 @@ function AudioChat({ senderMessage, audioUrl, username }) {
                         <br />
                         <br />
                         <audio controls>
-                            <source src={audioUrl} type="audio/mpeg" />
+                            <source src={url} type="audio/mpeg" />
                         </audio>
                     </div>
                 ) : (
@@ -19,7 +19,7 @@ function AudioChat({ senderMessage, audioUrl, username }) {
                         <br />
                         <br />
                         <audio controls>
-                            <source src={audioUrl} type="audio/mpeg" />
+                            <source src={url} type="audio/mpeg" />
                         </audio>
                     </div>
                 )
